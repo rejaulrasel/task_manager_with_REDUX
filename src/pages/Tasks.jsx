@@ -7,7 +7,11 @@ import { useSelector } from "react-redux";
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [myTasks, setMyTasks] = useState([])
   const { tasks } = useSelector((state) => state.tasksSlice);
+  const user = useSelector(state => state.userSlice);
+  const randomTasks = tasks.filter((task) => task.assignedTo == user.name);
+  
 
   const pendingTasks = tasks.filter((task) => task.status=='pending');
   const runningTasks = tasks.filter((task) => task.status=='running');
@@ -30,7 +34,7 @@ const Tasks = () => {
             <button onClick={() => setIsOpen(true)} className="btn btn-primary">
               Add Task
             </button>
-            <AddTaskModal isOpen={isOpen} setIsOpen={setIsOpen} />
+            <AddTaskModal isOpen={isOpen} setIsOpen={setIsOpen} randomTasks={randomTasks} setMyTasks={setMyTasks} />
             <div className="h-10 w-10 rounded-xl overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80"
@@ -124,7 +128,7 @@ const Tasks = () => {
             </div>
           </div>
         </div>
-        <MyTasks />
+        <MyTasks myTasks={myTasks} />
       </div>
     </div>
   );

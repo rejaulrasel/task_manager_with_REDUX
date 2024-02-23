@@ -3,7 +3,8 @@ import Modal from "../Modal";
 import { useDispatch } from "react-redux";
 import { addTask } from "../../redux/features/tasks/tasksSlice";
 
-const AddTaskModal = ({ isOpen, setIsOpen }) => {
+const AddTaskModal = ({ isOpen, setIsOpen, randomTasks, setMyTasks }) => {
+  // console.log(randomTasks);
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
   const onCancel = () => {
@@ -12,6 +13,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
   };
   const onSubmit = (data) => {
     dispatch(addTask(data))
+    setMyTasks(randomTasks);
     onCancel();
   };
 

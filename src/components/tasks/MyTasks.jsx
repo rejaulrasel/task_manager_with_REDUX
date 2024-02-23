@@ -7,7 +7,7 @@ import { updateStatus } from '../../redux/features/tasks/tasksSlice';
 import TaskDetailsModal from './taskDetailsModal';
 import { useState } from 'react';
 
-const MyTasks = () => {
+const MyTasks = ({myTasks}) => {
 const {tasks} = useSelector((state) => state.tasksSlice);
 const dispatch = useDispatch();
 const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +26,7 @@ const handleClick = (id) => {
       <h1 className="text-xl my-3">My Tasks {tasks.length}</h1>
       <div className=" h-[750px] overflow-auto space-y-3">
         {
-          tasks.map((task) => 
+          myTasks.map((task) => 
           <div
           key={task.id}
           className="bg-secondary/10 rounded-md p-3 flex justify-between"
