@@ -3,24 +3,21 @@ import {
   DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
-import { updateStatus, userTasks} from "../../redux/features/tasks/tasksSlice";
+import { updateStatus, userTasks } from "../../redux/features/tasks/tasksSlice";
 import TaskDetailsModal from "./taskDetailsModal";
 import { useEffect, useState } from "react";
 
-
 const MyTasks = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTask, setSeletedTask] = useState([])
+  const [selectedTask, setSeletedTask] = useState([]);
   const dispatch = useDispatch();
 
-  const {tasks, userSpecificTasks}= useSelector((state) => state.tasksSlice);
-  const {name: userName}= useSelector((state) => state.userSlice);
-
-  const updatedStatus = "done";
+  const { tasks, userSpecificTasks } = useSelector((state) => state.tasksSlice);
+  const { name: userName } = useSelector((state) => state.userSlice);
 
   useEffect(() => {
     dispatch(userTasks(userName));
-  },[userName,dispatch,tasks]);
+  }, [userName, dispatch, tasks]);
 
   const handleClick = (id) => {
     setIsOpen(true);
@@ -30,7 +27,14 @@ const MyTasks = () => {
 
   return (
     <div>
-      <h1 className="text-center text-xl my-3">My Total Tasks: {userSpecificTasks.length}</h1>
+      <TaskDetailsModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        task={selectedTask}
+      />
+      <h1 className="text-center text-xl my-3">
+        My Total Tasks: {userSpecificTasks.length}
+      </h1>
       <div className=" h-[750px] overflow-auto space-y-3">
         {userSpecificTasks.map((task) => (
           <div
@@ -46,14 +50,10 @@ const MyTasks = () => {
               >
                 <DocumentMagnifyingGlassIcon className="w-5 h-5 text-primary" />
               </button>
-              <TaskDetailsModal
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-                task={selectedTask}
-              />
+
               <button
                 onClick={() =>
-                  dispatch(updateStatus({ id: task.id, status: updatedStatus }))
+                  dispatch(updateStatus({ id: task.id, status: "done" }))
                 }
                 className="grid place-content-center"
                 title="Done"
