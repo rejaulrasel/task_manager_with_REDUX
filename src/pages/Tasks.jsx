@@ -4,13 +4,11 @@ import TaskCard from "../components/tasks/TaskCard";
 import { useState } from "react";
 import AddTaskModal from "../components/tasks/AddTaskModal";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [myTasks, setMyTasks] = useState([])
   const { tasks } = useSelector((state) => state.tasksSlice);
-  const user = useSelector(state => state.userSlice);
-  const randomTasks = tasks.filter((task) => task.assignedTo == user.name);
   
 
   const pendingTasks = tasks.filter((task) => task.status=='pending');
@@ -34,13 +32,15 @@ const Tasks = () => {
             <button onClick={() => setIsOpen(true)} className="btn btn-primary">
               Add Task
             </button>
-            <AddTaskModal isOpen={isOpen} setIsOpen={setIsOpen} randomTasks={randomTasks} setMyTasks={setMyTasks} />
+            <AddTaskModal isOpen={isOpen} setIsOpen={setIsOpen} />
             <div className="h-10 w-10 rounded-xl overflow-hidden">
+              <Link to='/profile'>
               <img
                 src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80"
                 alt=""
                 className="object-cover h-full w-full "
               />
+              </Link>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@ const Tasks = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-3 border-l-2 border-secondary/20 px-10 pt-10">
+      <div className=" col-span-3 border-l-2 border-secondary/20 px-10 pt-10">
         <div>
           <h1 className="text-xl">Members</h1>
           <div className="flex gap-3 mt-3">
@@ -128,7 +128,7 @@ const Tasks = () => {
             </div>
           </div>
         </div>
-        <MyTasks myTasks={myTasks} />
+        <MyTasks/>
       </div>
     </div>
   );

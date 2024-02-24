@@ -3,7 +3,7 @@ import Modal from "../Modal";
 import { useDispatch } from "react-redux";
 import { addTask } from "../../redux/features/tasks/tasksSlice";
 
-const AddTaskModal = ({ isOpen, setIsOpen, randomTasks, setMyTasks }) => {
+const AddTaskModal = ({ isOpen, setIsOpen}) => {
   // console.log(randomTasks);
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
@@ -12,8 +12,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, randomTasks, setMyTasks }) => {
     setIsOpen(false);
   };
   const onSubmit = (data) => {
-    dispatch(addTask(data))
-    setMyTasks(randomTasks);
+    dispatch(addTask(data));
     onCancel();
   };
 
@@ -62,8 +61,8 @@ const AddTaskModal = ({ isOpen, setIsOpen, randomTasks, setMyTasks }) => {
             id="assignedTo"
             {...register("assignedTo")}
           >
+            <option value="Rejaul Hasan">Rejaul Hasan</option>
             <option value="Mir Hussain">Mir Hussain</option>
-            <option value="Mezba Abedin">Mezba Abedin</option>
             <option value="Nahid Hasan">Nahid Hasan</option>
             <option value="Mizanur Rahman">Mizanur Rahman</option>
             <option value="Tanmoy Parvez">Tanmoy Parvez</option>
